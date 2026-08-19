@@ -18,5 +18,8 @@
     window.__APPV2=[];
     for(const p of parts) await load(p);
     (0,eval)(window.__APPV2.join(''));
+
+    // Load/reconcile the timer only after the premium shell has finished building.
+    await load('./timer-rescue.js?v=20260820e');
   }catch(e){console.error(e);document.body.innerHTML='<main style="padding:24px;color:#172033;font-family:system-ui;background:#f7f2eb;min-height:100vh"><h1>AI Prep could not start</h1><p>'+e.message+'</p><p>Please reload the page.</p></main>';}
 })();
