@@ -273,7 +273,7 @@
     // One-time cleanup for any stale PWA worker/cache from the earlier deployment.
     (function(){
       try{
-        var marker='timer-v1-cache-reset';
+        var marker='timer-v2-direct-load';
         if(localStorage.getItem('ai-prep-cache-reset')!==marker){
           if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});}).catch(function(){});}
           if('caches' in window){caches.keys().then(function(keys){return Promise.all(keys.filter(function(k){return /ai[-_ ]?prep/i.test(k);}).map(function(k){return caches.delete(k);}));}).catch(function(){});}
@@ -282,7 +282,8 @@
       }catch(e){}
     })();
   </script>
-  <script src="seed-data.js?v=20260820c"></script>
-  <script src="app.js?v=20260820c-timer"></script>
+  <script src="seed-data.js?v=20260820d"></script>
+  <script src="app.js?v=20260820d"></script>
+  <script src="timer-v1.js?v=20260820-direct2"></script>
 </body>
 </html>
