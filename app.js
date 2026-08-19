@@ -20,6 +20,6 @@
     (0,eval)(window.__APPV2.join(''));
 
     await load('./timer-v1.js?v=final1');
-    await load('./timer-ui-v2.js?v=1');
+    await load('./timer-ui-v2.js?v=2');
   }catch(e){console.error(e);document.body.innerHTML='<main style="padding:24px;color:#172033;font-family:system-ui;background:#f7f2eb;min-height:100vh"><h1>AI Prep could not start</h1><p>'+e.message+'</p><p>Please reload the page.</p></main>';}
 })();
