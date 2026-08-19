@@ -1,0 +1,253 @@
+/* AI Prep — mobile polish / visual fixes */
+html{color-scheme:light!important;}
+html body{background:#f7f2eb!important;color:#152033!important;}
+
+/* Softer premium canvas */
+html body .topbar{
+  background:rgba(247,242,235,.94)!important;
+  border-bottom:1px solid rgba(226,214,202,.62)!important;
+  box-shadow:0 8px 28px rgba(70,50,30,.045)!important;
+}
+html body .goal-card{
+  background:linear-gradient(145deg,#fffdf9 0%,#fff8f3 58%,#f3fbf8 100%)!important;
+  border-color:rgba(226,211,197,.84)!important;
+  box-shadow:0 18px 44px rgba(54,39,24,.075)!important;
+}
+html body .panel,
+html body .mini-card,
+html body .metric-card,
+html body .log-panel{
+  box-shadow:0 12px 34px rgba(53,39,27,.065)!important;
+}
+
+/* FIX: progress ring centres were inheriting the old dark theme and the
+   tiny .ring-inner background was showing as a white vertical block. */
+html body .ring{
+  width:126px!important;
+  height:126px!important;
+  padding:0!important;
+  isolation:isolate!important;
+}
+html body .ring:after{
+  content:""!important;
+  position:absolute!important;
+  inset:12px!important;
+  border-radius:50%!important;
+  background:linear-gradient(145deg,#fffefb,#faf5ee)!important;
+  box-shadow:inset 0 0 0 1px rgba(226,215,204,.75),0 6px 18px rgba(66,48,30,.04)!important;
+  z-index:0!important;
+}
+html body .ring.secondary:after{
+  background:linear-gradient(145deg,#fffefb,#f3faf8)!important;
+}
+html body .ring-inner{
+  position:relative!important;
+  z-index:2!important;
+  width:auto!important;
+  min-width:0!important;
+  height:auto!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  color:#10172a!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  line-height:1!important;
+}
+html body .ring-inner strong{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  color:#10172a!important;
+  font-size:36px!important;
+  line-height:.95!important;
+  font-weight:850!important;
+  letter-spacing:-.04em!important;
+}
+html body .ring-inner span{
+  display:block!important;
+  margin-top:7px!important;
+  padding:0!important;
+  background:transparent!important;
+  color:#8b837b!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:700!important;
+  letter-spacing:.01em!important;
+}
+html body .rings-row{gap:26px!important;padding:22px 0 12px!important;}
+html body .ring-label{font-size:16px!important;margin-top:11px!important;}
+html body .ring-sub{font-size:12px!important;margin-top:4px!important;}
+
+/* Main-goal badge: compact, soft and readable instead of a dark blob. */
+html body .mini-card-head{align-items:center!important;}
+html body .primary-card .pill{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  white-space:nowrap!important;
+  background:#ffe5de!important;
+  color:#b75045!important;
+  border:1px solid #f6c9bd!important;
+  border-radius:999px!important;
+  padding:5px 9px!important;
+  font-size:9px!important;
+  line-height:1!important;
+  font-weight:850!important;
+  box-shadow:none!important;
+}
+html body .primary-card strong{font-size:30px!important;margin-top:13px!important;}
+html body .mini-card{overflow:hidden!important;}
+
+/* FIX: Settings inherited the old navy sticky header. */
+html body .modal-backdrop{
+  background:rgba(42,35,29,.28)!important;
+  backdrop-filter:blur(12px)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+}
+html body .modal-sheet{
+  background:#fffdf9!important;
+  border-color:#e4d9ce!important;
+  box-shadow:0 -24px 70px rgba(47,37,28,.18)!important;
+}
+html body .modal-sheet .modal-head{
+  background:rgba(255,253,249,.97)!important;
+  border-bottom:1px solid #ece2d8!important;
+  box-shadow:0 7px 20px rgba(67,49,31,.035)!important;
+  backdrop-filter:blur(16px)!important;
+  -webkit-backdrop-filter:blur(16px)!important;
+}
+html body .modal-sheet .modal-head .section-kicker{
+  color:#c36b5e!important;
+}
+html body .modal-sheet .modal-head h2{
+  color:#10172a!important;
+  font-size:27px!important;
+  letter-spacing:-.035em!important;
+  font-weight:850!important;
+}
+html body .modal-sheet .modal-head .icon-btn{
+  width:44px!important;
+  height:44px!important;
+  border-radius:15px!important;
+  background:#fffaf5!important;
+  border-color:#e4d8cc!important;
+  box-shadow:0 8px 20px rgba(56,43,30,.07)!important;
+}
+
+/* FIX: old dark input-with-unit wrappers were visible behind light inputs. */
+html body .input-with-unit{
+  display:flex!important;
+  align-items:stretch!important;
+  overflow:hidden!important;
+  padding:0!important;
+  background:#fffdfa!important;
+  border:1px solid #e3d8cc!important;
+  border-radius:15px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85)!important;
+}
+html body .input-with-unit input{
+  flex:1 1 auto!important;
+  width:0!important;
+  min-width:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:#10172a!important;
+  padding:12px 14px!important;
+  outline:0!important;
+}
+html body .input-with-unit:focus-within{
+  border-color:#efa598!important;
+  box-shadow:0 0 0 3px rgba(255,111,97,.12)!important;
+}
+html body .input-with-unit>span{
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:58px!important;
+  padding:0 13px!important;
+  background:#f5eee6!important;
+  color:#81776e!important;
+  border-left:1px solid #e9ddd1!important;
+  font-size:11px!important;
+  font-weight:750!important;
+}
+html body input,
+html body select,
+html body textarea{
+  color-scheme:light!important;
+  background:#fffdfa!important;
+  color:#10172a!important;
+}
+html body select{background-color:#fffdfa!important;}
+
+/* Flexible-streak planner */
+html body .planner-section{
+  background:linear-gradient(145deg,#fffaf5 0%,#f9f3eb 100%)!important;
+  border-color:#e8dacd!important;
+  box-shadow:0 10px 28px rgba(58,43,28,.045),inset 0 1px 0 rgba(255,255,255,.95)!important;
+}
+html body .planner-chip{
+  background:#e8f5f2!important;
+  color:#397a72!important;
+  border:1px solid #d8eeea!important;
+  padding:7px 10px!important;
+}
+html body .planner-save{
+  min-height:46px!important;
+  background:linear-gradient(145deg,#fff5ef,#fff9f6)!important;
+  color:#b65d50!important;
+  border:1px solid #f1c8bd!important;
+  box-shadow:0 7px 18px rgba(202,94,76,.055)!important;
+}
+
+/* More elegant primary/alternate/deeper cards on phones. */
+@media(max-width:560px){
+  html body .tier-grid{
+    grid-template-columns:1fr 1fr!important;
+    gap:11px!important;
+  }
+  html body .primary-card{
+    grid-column:1 / -1!important;
+    min-height:0!important;
+    padding:17px 18px!important;
+  }
+  html body .tier-grid .mini-card:not(.primary-card){
+    min-height:128px!important;
+  }
+  html body .primary-card .progress-track{margin-top:10px!important;}
+  html body .primary-card small{font-size:12px!important;}
+  html body .rings-row{gap:18px!important;}
+  html body .ring{width:122px!important;height:122px!important;}
+  html body .goal-card{padding:20px 18px!important;}
+  html body .section-heading-row h2{font-size:22px!important;letter-spacing:-.025em!important;}
+  html body .modal-sheet{padding-left:16px!important;padding-right:16px!important;}
+  html body .modal-sheet .modal-head{margin-left:0!important;margin-right:0!important;}
+  html body .planner-section{padding:16px!important;}
+  html body .planner-grid{gap:9px!important;}
+}
+
+/* Slightly richer interaction without becoming flashy. */
+html body .metric-card,
+html body .mini-card,
+html body .panel,
+html body .chapter-row,
+html body .select-item{
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+}
+html body .text-btn{color:#c75d52!important;}
+html body .bottom-nav{
+  background:rgba(255,253,249,.95)!important;
+  border-color:rgba(225,212,199,.95)!important;
+  box-shadow:0 18px 44px rgba(54,41,29,.14)!important;
+}
+html body .bottom-nav button.active{
+  background:linear-gradient(145deg,#fff1eb,#f9eee6)!important;
+}
