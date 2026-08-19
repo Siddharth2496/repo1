@@ -6,12 +6,13 @@
   function $(id){return document.getElementById(id);}
   function q(sel,root){return (root||document).querySelector(sel);}
   function qa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));}
+  function pad(n){return String(n).padStart(2,'0');}
 
   function loadCSS(){
     if(cssLoaded||q('link[data-timer-ui-v2]'))return;
     cssLoaded=true;
     var l=document.createElement('link');
-    l.rel='stylesheet'; l.href='./timer-ui-v2.css?v=1'; l.setAttribute('data-timer-ui-v2','1');
+    l.rel='stylesheet'; l.href='./timer-ui-v2.css?v=2'; l.setAttribute('data-timer-ui-v2','1');
     document.head.appendChild(l);
   }
 
@@ -52,9 +53,26 @@
     var clock=$('focusClock'); if(!clock||$('focusTimerRing'))return;
     var ring=document.createElement('div'); ring.id='focusTimerRing'; ring.className='focus-timer-ring'; ring.style.setProperty('--ring-progress','0deg');
     var inner=document.createElement('div'); inner.className='focus-timer-ring-inner';
+    var pretty=document.createElement('div'); pretty.id='focusClockPretty'; pretty.className='focus-clock-pretty'; pretty.textContent='00:00';
     var cap=document.createElement('div'); cap.id='focusRingCaption'; cap.className='focus-ring-caption'; cap.textContent='1-hour focus ring';
     clock.parentNode.insertBefore(ring,clock);
-    ring.appendChild(inner); inner.appendChild(clock); inner.appendChild(cap);
+    ring.appendChild(inner);
+    inner.appendChild(clock);
+    inner.appendChild(pretty);
+    inner.appendChild(cap);
+  }
+
+  function formatTimer(elapsed,active){
+    if(!active)return '00:00';
+    var totalSeconds=Math.floor(Math.max(0,elapsed)/1000);
+    if(elapsed<3600000){
+      var minutes=Math.floor(totalSeconds/60);
+      var seconds=totalSeconds%60;
+      return pad(minutes)+':'+pad(seconds);
+    }
+    var hours=Math.floor(totalSeconds/3600);
+    var mins=Math.floor((totalSeconds%3600)/60);
+    return pad(hours)+':'+pad(mins)+' 🔥';
   }
 
   function updateRing(){
@@ -67,6 +85,10 @@
     ring.classList.toggle('ring-running',!!active);
     ring.classList.toggle('ring-complete',!!active&&pct>=1);
     var hero=q('.focus-hero-card'); if(hero)hero.classList.toggle('is-running',!!active);
+
+    var pretty=$('focusClockPretty');
+    if(pretty)pretty.textContent=formatTimer(elapsed,!!active);
+
     var cap=$('focusRingCaption');
     if(cap){
       if(!active)cap.textContent='1-hour focus ring';
@@ -86,5 +108,5 @@
 
   var tries=0;
   var boot=setInterval(function(){tries++;if(install()||tries>80)clearInterval(boot);},250);
-  setInterval(function(){arrangeNav();addHistoryToSettings();updateRing();},1000);
+  setInterval(function(){arrangeNav();addHistoryToSettings();updateRing();},250);
 })();
