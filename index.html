@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="AI Prep" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>AI Prep</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow" id="dateLabel">AI Interview Prep</div>
+        <h1 id="viewTitle">Home</h1>
+      </div>
+      <button class="icon-btn" id="settingsBtn" aria-label="Settings">⚙︎</button>
+    </header>
+
+    <main class="main-content">
+      <!-- HOME -->
+      <section class="view active" id="view-home" data-view="home">
+        <div id="goalCelebration" class="celebration hidden" aria-live="polite">
+          <div class="celebration-icon">🔥</div>
+          <div><strong>Productive day complete</strong><div>Your streak is safe. Keep stacking days.</div></div>
+        </div>
+
+        <div class="hero-grid">
+          <article class="metric-card streak-card">
+            <span class="metric-label">Productive streak</span>
+            <div class="metric-value"><span id="streakCurrent">0</span><span class="metric-unit"> days</span></div>
+            <div class="metric-sub">Best <span id="streakBest">0</span> days</div>
+          </article>
+          <article class="metric-card">
+            <span class="metric-label">Overall core</span>
+            <div class="metric-value" id="overallCore">0%</div>
+            <div class="metric-sub">Book + Primary goal</div>
+          </article>
+        </div>
+
+        <section class="goal-card">
+          <div class="section-heading-row">
+            <div>
+              <div class="section-kicker">Today</div>
+              <h2>Close your rings</h2>
+            </div>
+            <button class="text-btn" id="goLogBtn">Log progress</button>
+          </div>
+          <div class="rings-row">
+            <div class="ring-wrap">
+              <div class="ring" id="videoRing"><div class="ring-inner"><strong id="todayVideoMin">0</strong><span>min</span></div></div>
+              <div class="ring-label">Video</div>
+              <div class="ring-sub"><span id="videoTargetText">0 / 120</span></div>
+            </div>
+            <div class="ring-wrap">
+              <div class="ring secondary" id="topicRing"><div class="ring-inner"><strong id="todayTopics">0</strong><span>new</span></div></div>
+              <div class="ring-label">Topics</div>
+              <div class="ring-sub"><span id="topicTargetText">0 / 4</span></div>
+            </div>
+          </div>
+          <div class="goal-status" id="goalStatus">Start with one small win.</div>
+        </section>
+
+        <div class="tier-grid">
+          <article class="mini-card primary-card">
+            <div class="mini-card-head"><span>★ Primary</span><span class="pill">Main goal</span></div>
+            <strong id="primaryPct">0%</strong>
+            <div class="progress-track"><div id="primaryBar" class="progress-fill"></div></div>
+            <small id="primaryText">0 / 0 core videos</small>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card-head"><span>◆ Alternate</span></div>
+            <strong id="alternateDone">0</strong>
+            <small>videos completed</small>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card-head"><span>▲ Deeper</span></div>
+            <strong id="deeperDone">0</strong>
+            <small>videos completed</small>
+          </article>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading-row">
+            <div><div class="section-kicker">Consistency</div><h2>Last 35 days</h2></div>
+            <div class="subtle" id="productiveDaysText">0 productive</div>
+          </div>
+          <div class="heatmap" id="heatmap"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading-row">
+            <div><div class="section-kicker">Momentum</div><h2>Cumulative prep time</h2></div>
+            <div class="big-inline" id="totalHours">0h</div>
+          </div>
+          <svg id="hoursChart" class="line-chart" viewBox="0 0 640 180" role="img" aria-label="Cumulative study hours chart"></svg>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading-row"><div><div class="section-kicker">Chapters</div><h2>Core progress</h2></div><button class="text-btn" data-nav="progress">See all</button></div>
+          <div id="homeChapterProgress" class="chapter-list compact"></div>
+        </section>
+      </section>
+
+      <!-- LOG -->
+      <section class="view" id="view-log" data-view="log">
+        <section class="panel log-panel">
+          <div class="log-top-row">
+            <label class="field compact-field"><span>Date</span><input type="date" id="logDate" /></label>
+            <div class="segmented" id="logTypeTabs">
+              <button class="active" data-logtype="video">Videos</button>
+              <button data-logtype="book">Book</button>
+              <button data-logtype="manual">Other</button>
+            </div>
+          </div>
+
+          <div id="log-video" class="log-mode active">
+            <div class="purpose-row">
+              <div><span class="field-label">Purpose</span><div class="helper" id="videoPurposeHint">Suggested from your history</div></div>
+              <div class="segmented small" id="videoPurposeTabs">
+                <button class="active" data-purpose="learning">Learning</button>
+                <button data-purpose="revision">Revision</button>
+              </div>
+            </div>
+
+            <div class="filter-grid">
+              <label class="field"><span>Search</span><input type="search" id="videoSearch" placeholder="Video, playlist, creator…" /></label>
+              <label class="field"><span>Tier</span><select id="videoTierFilter"><option value="all">All</option><option value="primary">★ Primary</option><option value="alternate">◆ Alternate</option><option value="deeper">▲ Deeper</option></select></label>
+              <label class="field"><span>Chapter</span><select id="videoChapterFilter"><option value="all">All chapters</option></select></label>
+            </div>
+
+            <div class="selection-summary" id="videoSelectionSummary">Select what you watched.</div>
+            <div id="videoList" class="select-list"></div>
+            <button class="ghost-btn not-listed" id="notListedBtn">Not listed? Add a resource</button>
+          </div>
+
+          <div id="log-book" class="log-mode">
+            <div class="purpose-row">
+              <div><span class="field-label">Purpose</span><div class="helper" id="bookPurposeHint">Learning is suggested for new topics.</div></div>
+              <div class="segmented small" id="bookPurposeTabs">
+                <button class="active" data-purpose="learning">Learning</button>
+                <button data-purpose="revision">Revision</button>
+              </div>
+            </div>
+            <label class="field"><span>Chapter</span><select id="bookChapterSelect"></select></label>
+            <div id="bookTopicList" class="select-list topic-list"></div>
+            <label class="field"><span>Total time for this study block</span><div class="input-with-unit"><input type="number" min="0" inputmode="numeric" id="bookMinutes" placeholder="90" /><span>min</span></div></label>
+            <div class="helper">For topic analytics, block time is split evenly across selected topics so you only enter one number.</div>
+            <div class="selection-summary" id="bookSelectionSummary">Select the topics you covered.</div>
+          </div>
+
+          <div id="log-manual" class="log-mode">
+            <label class="field"><span>What did you do?</span><select id="manualKind"><option>Interview Prep</option><option>Practice</option><option>Project / Coding</option><option>Other Study</option></select></label>
+            <label class="field"><span>Chapter (optional)</span><select id="manualChapter"><option value="">No chapter</option></select></label>
+            <label class="field"><span>Purpose</span><select id="manualPurpose"><option value="learning">Learning</option><option value="revision">Revision</option></select></label>
+            <label class="field"><span>Minutes</span><div class="input-with-unit"><input type="number" min="1" inputmode="numeric" id="manualMinutes" placeholder="45" /><span>min</span></div></label>
+            <label class="field"><span>Note (optional)</span><textarea id="manualNote" rows="3" placeholder="e.g. RAG interview questions"></textarea></label>
+          </div>
+
+          <button class="primary-btn save-btn" id="saveLogBtn">Save progress</button>
+        </section>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="view" id="view-progress" data-view="progress">
+        <div class="segmented progress-tabs" id="progressTabs">
+          <button class="active" data-progresstab="chapters">Chapters</button>
+          <button data-progresstab="videos">Videos</button>
+          <button data-progresstab="topics">Topics</button>
+        </div>
+        <div id="progress-chapters" class="progress-mode active"><div id="chapterProgressList" class="chapter-list"></div></div>
+        <div id="progress-videos" class="progress-mode">
+          <div class="tier-progress-cards" id="tierProgressCards"></div>
+          <label class="field"><span>Filter playlist</span><select id="progressPlaylistFilter"><option value="all">All playlists</option></select></label>
+          <div id="videoProgressList" class="progress-video-list"></div>
+        </div>
+        <div id="progress-topics" class="progress-mode">
+          <label class="field"><span>Chapter</span><select id="topicProgressChapter"></select></label>
+          <div id="topicProgressList" class="topic-progress-list"></div>
+        </div>
+      </section>
+
+      <!-- HISTORY -->
+      <section class="view" id="view-history" data-view="history">
+        <div class="history-toolbar">
+          <label class="field"><span>Show</span><select id="historyFilter"><option value="all">Everything</option><option value="learning">Learning</option><option value="revision">Revision</option><option value="video">Videos</option><option value="book">Book</option></select></label>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="active" data-nav="home"><span>⌂</span><small>Home</small></button>
+      <button data-nav="log"><span>＋</span><small>Log</small></button>
+      <button data-nav="progress"><span>◫</span><small>Progress</small></button>
+      <button data-nav="history"><span>↺</span><small>History</small></button>
+    </nav>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <div class="modal-sheet">
+      <div class="modal-head"><div><div class="section-kicker">AI Prep</div><h2>Settings</h2></div><button class="icon-btn" data-close="settingsModal">✕</button></div>
+      <div class="settings-stack">
+        <label class="field"><span>Daily video goal</span><div class="input-with-unit"><input id="settingVideoTarget" type="number" min="0" inputmode="numeric" /><span>min</span></div></label>
+        <label class="field"><span>Daily new-topic goal</span><div class="input-with-unit"><input id="settingTopicTarget" type="number" min="0" inputmode="numeric" /><span>topics</span></div></label>
+        <label class="field"><span>Productive day</span><select id="settingRule"><option value="and">Meet both goals</option><option value="or">Meet either goal</option></select></label>
+        <button class="primary-btn" id="saveSettingsBtn">Save settings</button>
+        <div class="divider"></div>
+        <h3>Backup</h3>
+        <button class="ghost-btn" id="exportBackupBtn">Export full backup</button>
+        <label class="ghost-btn file-btn">Restore backup<input type="file" id="importBackupInput" accept="application/json" /></label>
+        <div class="helper">Your progress is stored on this device. Export a backup occasionally.</div>
+        <div class="divider"></div>
+        <button class="danger-btn" id="resetProgressBtn">Reset progress only</button>
+        <div class="version-tap" id="versionTap">AI Prep v1.0 · local-first</div>
+        <button class="ghost-btn hidden" id="resourceManagerBtn">Resource Manager</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCE MANAGER MODAL - hidden until version is tapped 5 times -->
+  <div class="modal-backdrop hidden" id="resourceModal">
+    <div class="modal-sheet tall">
+      <div class="modal-head"><div><div class="section-kicker">Advanced</div><h2>Resource Manager</h2></div><button class="icon-btn" data-close="resourceModal">✕</button></div>
+      <div class="admin-banner">Add missing videos or whole playlists. Primary can be made part of your main goal; Alternate and Deeper stay optional.</div>
+      <div class="segmented" id="resourceModeTabs"><button class="active" data-resmode="single">Single video</button><button data-resmode="playlist">Playlist</button></div>
+
+      <div id="resource-single" class="resource-mode active">
+        <label class="field"><span>Video title</span><input id="resTitle" /></label>
+        <label class="field"><span>Playlist / source name</span><input id="resPlaylist" placeholder="e.g. My RAG playlist" /></label>
+        <div class="two-col">
+          <label class="field"><span>Tier</span><select id="resTier"><option value="primary">★ Primary</option><option value="alternate">◆ Alternate</option><option value="deeper">▲ Deeper</option></select></label>
+          <label class="field"><span>Duration</span><div class="input-with-unit"><input id="resDuration" type="number" min="0" step="0.1" inputmode="decimal" /><span>min</span></div></label>
+        </div>
+        <div class="two-col">
+          <label class="field"><span>Chapter</span><select id="resChapter"></select></label>
+          <label class="field"><span>Topic (optional)</span><select id="resTopic"><option value="">No specific topic</option></select></label>
+        </div>
+        <label class="field"><span>URL (optional)</span><input id="resUrl" type="url" placeholder="https://…" /></label>
+        <label class="check-row" id="goalToggleRow"><input type="checkbox" id="resCountsGoal" checked /><span>Count this Primary video toward my main goal</span></label>
+        <button class="primary-btn" id="addSingleResourceBtn">Add video</button>
+      </div>
+
+      <div id="resource-playlist" class="resource-mode">
+        <label class="field"><span>Playlist name</span><input id="playlistName" /></label>
+        <div class="two-col">
+          <label class="field"><span>Tier</span><select id="playlistTier"><option value="primary">★ Primary</option><option value="alternate">◆ Alternate</option><option value="deeper">▲ Deeper</option></select></label>
+          <label class="field"><span>Chapter</span><select id="playlistChapter"></select></label>
+        </div>
+        <label class="field"><span>Playlist URL (optional)</span><input id="playlistUrl" type="url" /></label>
+        <label class="field"><span>Paste videos</span><textarea id="playlistBulk" rows="8" placeholder="One per line:\nVideo title | 32 | https://...\nAnother video | 18 | https://..."></textarea></label>
+        <label class="check-row" id="playlistGoalToggleRow"><input type="checkbox" id="playlistCountsGoal" checked /><span>Count these Primary videos toward my main goal</span></label>
+        <button class="primary-btn" id="addPlaylistBtn">Add playlist videos</button>
+      </div>
+
+      <div class="divider"></div>
+      <h3>Your added resources</h3>
+      <div id="customResourceList" class="custom-resource-list"></div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="seed-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
