@@ -12,7 +12,7 @@
     if(cssLoaded||q('link[data-timer-ui-v2]'))return;
     cssLoaded=true;
     var l=document.createElement('link');
-    l.rel='stylesheet'; l.href='./timer-ui-v2.css?v=2'; l.setAttribute('data-timer-ui-v2','1');
+    l.rel='stylesheet'; l.href='./timer-ui-v2.css?v=3'; l.setAttribute('data-timer-ui-v2','1');
     document.head.appendChild(l);
   }
 
